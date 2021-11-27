@@ -1,7 +1,7 @@
-module.exports = {
+const IdentitySDK = {
   package: {
     name: 'identity-sdk',
-    version: '0.0.1'
+    version: '0.0.3'
   },
   Authentication: ({
     rootElement,
@@ -57,6 +57,11 @@ module.exports = {
         }
 
         return onAuth(authResponse);
+      }
+
+      if (event.token) {
+        localStorage.clear();
+        window.location.reload();
       }
     };
 
