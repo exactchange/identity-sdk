@@ -1,7 +1,7 @@
-const IdentitySDK = {
+module.exports = {
   package: {
     name: 'identity-sdk',
-    version: '0.0.3'
+    version: '0.0.4'
   },
   Authentication: ({
     rootElement,
