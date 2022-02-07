@@ -1,16 +1,17 @@
 const IdentitySDK = window.IdentitySDK = {
   package: {
     name: 'identity-sdk',
-    version: '0.0.8'
+    version: '0.1.0'
   },
   Authentication: ({
     rootElement,
     onAuth,
     onSignup,
+    onPasswordReset,
     onLoad,
     paths = {}
   }) => {
-    let auth, signup, login, create, register, email, username, password;
+    let auth, signup, login, create, register, email, resetEmail, username, password;
 
     const onLogin = async event => {
       if (!event.token) {
@@ -106,7 +107,7 @@ const IdentitySDK = window.IdentitySDK = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          username: email.value
+          username: resetEmail.value
         })
       });
 
@@ -135,7 +136,7 @@ const IdentitySDK = window.IdentitySDK = {
           <button id="register">${signupText}</button>
         </form>
         <form id="reset" action="" class="hide">
-          <input id="email" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
+          <input id="reset-email" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
           <button id="resetPassword">${resetText}</button>
         </form>
         <form id="auth" action="">
@@ -169,6 +170,7 @@ const IdentitySDK = window.IdentitySDK = {
         forgot = document.getElementById('forgot');
         register = document.getElementById('register');
         email = document.getElementById('email');
+        resetEmail = document.getElementById('reset-email');
         username = document.getElementById('username');
         password = document.getElementById('password');
 
