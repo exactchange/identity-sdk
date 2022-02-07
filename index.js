@@ -1,7 +1,7 @@
 const IdentitySDK = window.IdentitySDK = {
   package: {
     name: 'identity-sdk',
-    version: '0.0.7'
+    version: '0.0.8'
   },
   Authentication: ({
     rootElement,
@@ -96,11 +96,34 @@ const IdentitySDK = window.IdentitySDK = {
       }
     };
 
+    const onReset = async event => {
+      event.preventDefault();
+
+      const resetResult = await fetch(paths.reset, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: email.value
+        })
+      });
+
+      if (resetResult && resetResult.status === 200) {
+        const resetResponse = await resetResult.json();
+
+        return onPasswordReset(resetResponse);
+      }
+    };
+
     const onShow = ({
       title,
       loginText = 'Login',
       signupText = 'Signup',
+      forgotText = 'Forgot password',
       createText = 'Create an account',
+      resetText = 'Reset password',
       usernamePlaceholder = 'Email',
       passwordPlaceholder = 'Password',
     }) => {
@@ -110,6 +133,10 @@ const IdentitySDK = window.IdentitySDK = {
         <form id="signup" action="" class="hide">
           <input id="email" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
           <button id="register">${signupText}</button>
+        </form>
+        <form id="reset" action="" class="hide">
+          <input id="email" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
+          <button id="resetPassword">${resetText}</button>
         </form>
         <form id="auth" action="">
           <h1 id="branding">
@@ -122,6 +149,9 @@ const IdentitySDK = window.IdentitySDK = {
             <button id="create">
               ${createText}
             </button>
+            <button id="forgot">
+              ${forgotText}
+            </button>
           </div>
         </form>
       `;
@@ -133,8 +163,10 @@ const IdentitySDK = window.IdentitySDK = {
       requestAnimationFrame(() => {
         auth = document.getElementById('auth');
         signup = document.getElementById('signup');
+        reset = document.getElementById('reset');
         login = document.getElementById('login');
         create = document.getElementById('create');
+        forgot = document.getElementById('forgot');
         register = document.getElementById('register');
         email = document.getElementById('email');
         username = document.getElementById('username');
@@ -169,6 +201,12 @@ const IdentitySDK = window.IdentitySDK = {
           signup.removeAttribute('class');
         };
 
+        forgot.onclick = () => {
+          auth.setAttribute('class', 'hide');
+          reset.removeAttribute('class');
+        };
+
+        resetPassword.onclick = onReset;
         register.onclick = onRegister;
         login.onclick = onLogin;
       });
