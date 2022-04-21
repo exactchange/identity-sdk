@@ -4,7 +4,7 @@
 const IdentitySDK = window.IdentitySDK = {
   package: {
     name: 'identity-sdk',
-    version: '0.1.2'
+    version: '0.1.4'
   },
   Authentication: ({
     rootElement,
