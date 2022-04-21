@@ -1,7 +1,10 @@
+/* eslint-disable no-magic-numbers */
+
+// eslint-disable-next-line no-unused-vars
 const IdentitySDK = window.IdentitySDK = {
   package: {
     name: 'identity-sdk',
-    version: '0.1.0'
+    version: '0.1.2'
   },
   Authentication: ({
     rootElement,
@@ -19,12 +22,12 @@ const IdentitySDK = window.IdentitySDK = {
       }
 
       const isValid = (
-        (event.username && event.username.length > 2 && event.token && event.token.length > 5) ||
-        (username.value.length > 2 && password.value.length > 5)
+        (event?.username?.length > 2 && event?.token?.length > 5) ||
+        (username?.value?.length > 2 && password?.value?.length > 5)
       );
 
       if (!isValid) {
-        auth.setAttribute('class', 'no');
+        auth?.setAttribute('class', 'no');
 
         return;
       }
@@ -34,7 +37,7 @@ const IdentitySDK = window.IdentitySDK = {
         : {
           username: username.value,
           password: password.value
-        }
+        };
 
       const authResult = await fetch(paths.login, {
         method: 'POST',
@@ -70,6 +73,7 @@ const IdentitySDK = window.IdentitySDK = {
       event.preventDefault();
 
       const isValid = (
+        // eslint-disable-next-line max-len
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       ).test(email.value);
 
@@ -136,7 +140,7 @@ const IdentitySDK = window.IdentitySDK = {
           <button id="register">${signupText}</button>
         </form>
         <form id="reset" action="" class="hide">
-          <input id="reset-email" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
+          <input id="resetEmail" type="email" autocomplete="true" placeholder=${usernamePlaceholder} required />
           <button id="resetPassword">${resetText}</button>
         </form>
         <form id="auth" action="">
@@ -158,7 +162,7 @@ const IdentitySDK = window.IdentitySDK = {
       `;
 
       Array.from(element.children).reverse().forEach(child => (
-        rootElement.insertBefore(child,rootElement.firstElementChild)
+        rootElement.insertBefore(child, rootElement.firstElementChild)
       ));
 
       requestAnimationFrame(() => {
@@ -170,7 +174,7 @@ const IdentitySDK = window.IdentitySDK = {
         forgot = document.getElementById('forgot');
         register = document.getElementById('register');
         email = document.getElementById('email');
-        resetEmail = document.getElementById('reset-email');
+        resetEmail = document.getElementById('resetEmail');
         username = document.getElementById('username');
         password = document.getElementById('password');
 
@@ -218,7 +222,7 @@ const IdentitySDK = window.IdentitySDK = {
       onShow,
       onLogin,
       onLoad
-    }
+    };
   },
   Management: {},
   Authorizations: {}
